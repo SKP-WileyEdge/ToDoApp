@@ -19,7 +19,7 @@ class TaskManager:
     def add_task(self, title, priority):
         task = {}
         task_id = len(self.tasks)
-        task['ID'] = 1
+        task['ID'] = task_id
         task['Title'] = title
         task['Priority'] = input("Enter Priority[high/medium/low]: ")
         task['Datetime'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
