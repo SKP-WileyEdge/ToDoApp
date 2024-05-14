@@ -63,12 +63,10 @@ class TaskManager:
             for task in self.tasks.values():
                 if search_term.lower() in task['priority'].lower():
                     print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
-        elif search_type == '4':  # Search by Timestamp
+        else:  # Search by Timestamp
             for task in self.tasks.values():
                 if search_term.lower() in task['timestamp'].lower():
                     print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
-        else:
-            print("Invalid search type.")
 
     def backup_tasks(self, backup_filename):
         with open(backup_filename, 'w') as file:
@@ -106,8 +104,15 @@ def main():
         elif choice == '5':
             print("\n1. Search by ID\n2. Search by Task\n3. Search by Priority\n4. Search by Timestamp\n")
             search_type = input("Choose type: ")
-            search_term = input("Enter search term: ")
-            task_manager.search_tasks(search_term, search_type)
+            valid_search_types = ['1', '2', '3', '4']  # Define valid search types
+            if search_type not in valid_search_types:
+                print('Invalid search type')
+            else:
+                search_term = input("Enter search term: ")
+                if search_term not in task_manager.tasks:
+                    print('Invalid search term ')
+                else:
+                    task_manager.search_tasks(search_term, search_type)
         elif choice == '6':
             backup_filename = input("Enter backup filename: ")
             task_manager.backup_tasks(backup_filename)
