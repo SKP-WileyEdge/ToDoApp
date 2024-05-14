@@ -13,7 +13,7 @@ class Task:
         return {"id": self.id, "title": self.title, "priority": self.priority, "timestamp": self.timestamp}
 
 class TaskManager:
-    def __init__(self, filename='tasks.json'):
+    def __init__(self, filename='tasks_backup.json'):
         self.filename = filename
         self.tasks = self.load_tasks()
 
@@ -22,16 +22,6 @@ class TaskManager:
             with open(self.filename, 'r') as file:
                 return json.load(file)
         return {}
-
-    def save_tasks(self):
-        with open(self.filename, 'w') as file:
-            json.dump(self.tasks, file, indent=4)
-
-    # def create_task(self, title, priority):
-    #    task_id = str(len(self.tasks) + 1)
-    #    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    #    self.tasks[task_id] = Task(task_id, title, priority, timestamp).to_dict()
-    #    self.save_tasks()
 
     def create_task(self,title, priority):
         d = {}
@@ -46,8 +36,7 @@ class TaskManager:
         d['title'] = title
         d['priority'] = priority
         d['timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.tasks[task_id]=d
-        self.save_tasks()    
+        self.tasks[task_id]=d  
 
     def list_tasks(self):
         if len(self.tasks)==0:
@@ -59,7 +48,6 @@ class TaskManager:
     def delete_task(self, task_id):
         if task_id in self.tasks:
             del self.tasks[task_id]
-            self.save_tasks()
 
     def edit_task(self, task_id, title=None, priority=None):
         if task_id in self.tasks:
@@ -67,7 +55,6 @@ class TaskManager:
                 self.tasks[task_id]['title'] = title
             if priority:
                 self.tasks[task_id]['priority'] = priority
-            self.save_tasks()
 
     def search_tasks(self, search_term, search_type):
         if search_type == '1':  # Search by ID
@@ -87,8 +74,8 @@ class TaskManager:
                 if search_term.lower() in task['timestamp'].lower():
                     print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
 
-    def backup_tasks(self, backup_filename):
-        with open(backup_filename, 'w') as file:
+    def backup_tasks(self):
+        with open(self.filename, 'w') as file:
             json.dump(self.tasks, file, indent=4)
 
 def main():
@@ -126,7 +113,7 @@ def main():
         elif choice == '5':
             print("\n1. Search by ID\n2. Search by Task\n3. Search by Priority\n4. Search by Timestamp\n")
             search_type = input("Choose type: ")
-            valid_search_types = ['1', '2', '3', '4']  # Define valid search types
+            valid_search_types = ['1', '2', '3', '4'] 
             if search_type not in valid_search_types:
                 print('Invalid search type')
             else:
@@ -136,8 +123,7 @@ def main():
                 else:
                     task_manager.search_tasks(search_term, search_type)
         elif choice == '6':
-            backup_filename = input("Enter backup filename: ")
-            task_manager.backup_tasks(backup_filename)
+            task_manager.backup_tasks()
             print('Backup is created')
         elif choice == '7':
             break
