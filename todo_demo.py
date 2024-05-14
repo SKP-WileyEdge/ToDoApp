@@ -41,7 +41,7 @@ class TaskManager:
 
     def list_tasks(self):
         for task in self.tasks.values():
-            print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}")
+                print("ID is %d, Task is %s, and the Priority of this task is %s" %(task['id'],task['title'],task['priority']))
 
     def delete_task(self, task_id):
         if task_id in self.tasks:
