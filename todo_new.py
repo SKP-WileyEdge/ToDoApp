@@ -1,14 +1,16 @@
 import json
 import os
+from datetime import datetime
 
 class Task:
-    def __init__(self, id, title, priority):
+    def __init__(self, id, title, priority, timestamp):
         self.id = id
         self.title = title
         self.priority = priority
+        self.timestamp = timestamp
 
     def to_dict(self):
-        return {"id": self.id, "title": self.title, "priority": self.priority}
+        return {"id": self.id, "title": self.title, "priority": self.priority, "timestamp": self.timestamp}
 
 class TaskManager:
     def __init__(self, filename='tasks.json'):
@@ -27,12 +29,13 @@ class TaskManager:
 
     def create_task(self, title, priority):
         task_id = str(len(self.tasks) + 1)
-        self.tasks[task_id] = Task(task_id, title, priority).to_dict()
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.tasks[task_id] = Task(task_id, title, priority, timestamp).to_dict()
         self.save_tasks()
 
     def list_tasks(self):
         for task in self.tasks.values():
-            print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}")
+            print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
 
     def delete_task(self, task_id):
         if task_id in self.tasks:
@@ -51,15 +54,19 @@ class TaskManager:
         if search_type == '1':  # Search by ID
             for task_id, task in self.tasks.items():
                 if search_term.lower() in task_id.lower():
-                    print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}")
+                    print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
         elif search_type == '2':  # Search by Task
             for task in self.tasks.values():
                 if search_term.lower() in task['title'].lower():
-                    print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}")
+                    print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
         elif search_type == '3':  # Search by Priority
             for task in self.tasks.values():
                 if search_term.lower() in task['priority'].lower():
-                    print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}")
+                    print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
+        elif search_type == '4':  # Search by Timestamp
+            for task in self.tasks.values():
+                if search_term.lower() in task['timestamp'].lower():
+                    print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
         else:
             print("Invalid search type.")
 
@@ -85,6 +92,9 @@ def main():
             title = input("Enter new title (leave blank to keep current): ")
             priority = input("Enter new priority (leave blank to keep current): ")
             task_manager.edit_task(task_id, title, priority)
+            print('\n')
+            print("Here is the Updated todo list: ")
+            task_manager.list_tasks()
         elif choice == '3':
             task_manager.list_tasks()
         elif choice == '4':
@@ -94,9 +104,7 @@ def main():
             task_manager.delete_task(task_id)
             print('The task with ID=%s is deleted.' %(task_id))
         elif choice == '5':
-            task_manager.list_tasks()
-            print('\n')
-            print("\n1. Search by ID\n2. Search by Task\n3. Search by Priority\n")
+            print("\n1. Search by ID\n2. Search by Task\n3. Search by Priority\n4. Search by Timestamp\n")
             search_type = input("Choose type: ")
             search_term = input("Enter search term: ")
             task_manager.search_tasks(search_term, search_type)
