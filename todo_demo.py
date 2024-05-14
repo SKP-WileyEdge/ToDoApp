@@ -27,10 +27,10 @@ class TaskManager:
 
     def edit_task(self, task_id, desc, priority):
         if task_id <= len(self.tasks):
-            if title:
-                self.tasks[task_id-1]['Description'] = desc
-            if priority:
-                self.tasks[task_id-1]['Priority'] = priority
+            self.tasks[task_id-1]['Description'] = desc
+            self.tasks[task_id-1]['Priority'] = priority
+        else:
+            print("Sorry no task with such id !")
 
     def list_tasks(self):
         for t in self.tasks.keys():
