@@ -25,7 +25,7 @@ class TaskManager:
         self.tasks.append(task)
 
     def edit_task(self, task_id, desc, priority):
-        if task_id <= len(self.tasks):
+        if task_id <= len(self.tasks) and self.tasks[task_id-1]!=0:
             self.tasks[task_id-1]['Description'] = desc
             self.tasks[task_id-1]['Priority'] = priority
         else:
@@ -55,7 +55,8 @@ class TaskManager:
             print("ID is %s, Task is %s, and the Priority of this task is %s" %(task['id'],task['title'],task['priority']))
    
     def delete_task(self, task_id):
-        if task_id in self.tasks:
+        if task_id <= len(self.tasks):
+            self.tasks[task_id-1] = 0
             del self.tasks[task_id]
             self.save_tasks()
 
