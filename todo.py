@@ -3,8 +3,8 @@ import time
 class TODO:
   
   def _init_(self, todos, ptr):
-    self.todos todos
-    self.ptr ptr
+    self.todos = todos
+    self.ptr = ptr
 
   def add(self):
     todo = {}
@@ -22,6 +22,8 @@ class TODO:
     pass
 
   def display(self):
+    for i in todos:
+      print("ID is %d, Task is %s, Priority of this task is %s and task is given at %s"%(i['id'],i['desc'],i['priority'],i['timestamp']))
     pass
 
   def searchbyDesc(self):
