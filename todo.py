@@ -7,7 +7,7 @@ class TODO:
     self.ptr ptr
 
   def add(self):
-    todo - {}
+    todo = {}
     todo['id'] = self.ptr
     self.ptr += 1
     todo['desc'] input("Enter the description: ")
