@@ -13,37 +13,17 @@ class Task:
 class TaskManager:
     def __init__(self, filename='tasks.json'):
         self.filename = filename
-        self.tasks = []
+        self.tasks = self.load_tasks()
 
-    def add_task(self, desc, priority):
-        task = {}
-        task_id = len(self.tasks)
-        task['ID'] = task_id
-        task['Description'] = title
-        task['Priority'] = input("Enter Priority[high/medium/low]: ")
-        task['Datetime'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.tasks.append(task)
+    def load_tasks(self):
+        if os.path.exists(self.filename):
+            with open(self.filename, 'r') as file:
+                return json.load(file)
+        return {}
 
-    def edit_task(self, task_id, desc, priority):
-        if task_id <= len(self.tasks) and self.tasks[task_id-1]!=0:
-            self.tasks[task_id-1]['Description'] = desc
-            self.tasks[task_id-1]['Priority'] = priority
-        else:
-            print("Sorry, no task with such id exists!")
-
-    def list_tasks(self):
-        for t in self.tasks.keys():
-                print(f"ID is {t['ID']}, Task is {t['Description']}, and the Priority of this task is {t['Priority']}" )
-
-    # def load_tasks(self):
-    #     if os.path.exists(self.filename):
-    #         with open(self.filename, 'r') as file:
-    #             return json.load(file)
-    #     return {}
-
-    # def save_tasks(self):
-    #     with open(self.filename, 'w') as file:
-    #         json.dump(self.tasks, file, indent=4)
+    def save_tasks(self):
+        with open(self.filename, 'w') as file:
+            json.dump(self.tasks, file, indent=4)
 
     def create_task(self, title, priority):
         task_id = str(len(self.tasks) + 1)
@@ -52,11 +32,10 @@ class TaskManager:
 
     def list_tasks(self):
         for task in self.tasks.values():
-            print("ID is %s, Task is %s, and the Priority of this task is %s" %(task['id'],task['title'],task['priority']))
-   
+            print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}")
+
     def delete_task(self, task_id):
-        if task_id <= len(self.tasks):
-            self.tasks[task_id-1] = 0
+        if task_id in self.tasks:
             del self.tasks[task_id]
             self.save_tasks()
 
@@ -81,19 +60,12 @@ class TaskManager:
             for task in self.tasks.values():
                 if search_term.lower() in task['priority'].lower():
                     print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}")
-        elif search_type == '4':  # Search by Timestamp
-            # HAVE TO ADD THIS
-            #
-            #
-            #
-            pass
         else:
             print("Invalid search type.")
 
     def backup_tasks(self, backup_filename):
         with open(backup_filename, 'w') as file:
             json.dump(self.tasks, file, indent=4)
-
 
 def main():
     task_manager = TaskManager()
@@ -105,9 +77,10 @@ def main():
             title = input("Enter task title: ")
             priority = input("Enter task priority (high, medium, low): ")
             task_manager.create_task(title, priority)
+            print('New task is created !')
         elif choice == '2':
             task_manager.list_tasks()
-            print('/n')
+            print('\n')
             task_id = input("Enter task ID to edit: ")
             title = input("Enter new title (leave blank to keep current): ")
             priority = input("Enter new priority (leave blank to keep current): ")
@@ -116,17 +89,21 @@ def main():
             task_manager.list_tasks()
         elif choice == '4':
             task_manager.list_tasks()
-            print('/n')
+            print('\n')
             task_id = input("Enter task ID to delete: ")
             task_manager.delete_task(task_id)
+            print('The task with ID=%s is deleted.' %(task_id))
         elif choice == '5':
-            print("\n1. Search by ID\n2. Search by Task\n3. Search by Priority\n4. Search by Timestamp\n")
-            search_type = input("Choose search type: ")
+            task_manager.list_tasks()
+            print('\n')
+            print("\n1. Search by ID\n2. Search by Task\n3. Search by Priority\n")
+            search_type = input("Choose type: ")
             search_term = input("Enter search term: ")
             task_manager.search_tasks(search_term, search_type)
         elif choice == '6':
             backup_filename = input("Enter backup filename: ")
             task_manager.backup_tasks(backup_filename)
+            print('Backup is created')
         elif choice == '7':
             break
         else:
