@@ -33,8 +33,8 @@ class TaskManager:
                 self.tasks[task_id-1]['Priority'] = priority
 
     def list_tasks(self):
-        for task in self.tasks.keys():
-                print("ID is %d, Task is %s, and the Priority of this task is %s" %(task['ID'],task['Description'],task['Priority']))
+        for t in self.tasks.keys():
+                print(f"ID is {t['ID']}, Task is {t['Description']}, and the Priority of this task is {t['Priority']}" )
 
     def delete_task(self, task_id):
         if task_id in self.tasks:
