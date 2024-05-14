@@ -35,15 +35,15 @@ class TaskManager:
         for t in self.tasks.keys():
                 print(f"ID is {t['ID']}, Task is {t['Description']}, and the Priority of this task is {t['Priority']}" )
 
-    def load_tasks(self):
-        if os.path.exists(self.filename):
-            with open(self.filename, 'r') as file:
-                return json.load(file)
-        return {}
+    # def load_tasks(self):
+    #     if os.path.exists(self.filename):
+    #         with open(self.filename, 'r') as file:
+    #             return json.load(file)
+    #     return {}
 
-    def save_tasks(self):
-        with open(self.filename, 'w') as file:
-            json.dump(self.tasks, file, indent=4)
+    # def save_tasks(self):
+    #     with open(self.filename, 'w') as file:
+    #         json.dump(self.tasks, file, indent=4)
 
     def create_task(self, title, priority):
         task_id = str(len(self.tasks) + 1)
