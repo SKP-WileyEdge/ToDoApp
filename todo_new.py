@@ -73,16 +73,11 @@ class TaskManager:
         with open(backup_filename, 'w') as file:
             json.dump(self.tasks, file, indent=4)
 
-    def restore_tasks(self, backup_filename):
-        if os.path.exists(backup_filename):
-            with open(backup_filename, 'r') as file:
-                self.tasks = json.load(file)
-            self.save_tasks()
 
 def main():
     task_manager = TaskManager()
     while True:
-        print("\n1. Create Task\n2. Edit Task\n3. List Tasks\n4. Delete Task\n5. Search Tasks\n6. Backup Tasks\n7. Restore Tasks\n8. Exit")
+        print("\n1. Create Task\n2. Edit Task\n3. List Tasks\n4. Delete Task\n5. Search Tasks\n6. Backup Tasks\n7. Exit")
         choice = input("Choose an option: ")
 
         if choice == '1':
@@ -112,9 +107,6 @@ def main():
             backup_filename = input("Enter backup filename: ")
             task_manager.backup_tasks(backup_filename)
         elif choice == '7':
-            backup_filename = input("Enter backup filename to restore: ")
-            task_manager.restore_tasks(backup_filename)
-        elif choice == '8':
             break
         else:
             print("Invalid choice. Please try again.")
