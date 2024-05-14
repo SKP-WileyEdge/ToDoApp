@@ -10,9 +10,9 @@ class TODO:
     todo = {}
     todo['id'] = self.ptr
     self.ptr += 1
-    todo['desc'] input("Enter the description: ")
-    todo['priority'] imput("Enter Priority(high/medium/low): ")
-    todo['timestamp'] time.strftime("%Y-%m-%d %H:%M:%S")
+    todo['desc'] = input("Enter the description: ")
+    todo['priority'] = imput("Enter Priority(high/medium/low): ")
+    todo['timestamp'] = time.strftime("%Y-%m-%d %H:%M:%S")
     todos.append(todo)
 
   def edit(self):
