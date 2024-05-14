@@ -27,15 +27,34 @@ class TaskManager:
         with open(self.filename, 'w') as file:
             json.dump(self.tasks, file, indent=4)
 
-    def create_task(self, title, priority):
-        task_id = str(len(self.tasks) + 1)
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.tasks[task_id] = Task(task_id, title, priority, timestamp).to_dict()
-        self.save_tasks()
+    # def create_task(self, title, priority):
+    #    task_id = str(len(self.tasks) + 1)
+    #    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    #    self.tasks[task_id] = Task(task_id, title, priority, timestamp).to_dict()
+    #    self.save_tasks()
+
+    def create_task(self,title, priority):
+        d = {}
+        if(len(self.tasks)>0):
+            for i in self.tasks:
+                i=int(i)
+            i+=1
+        else:
+            i=1
+        task_id = str(i)
+        d['id']=task_id
+        d['title'] = title
+        d['priority'] = priority
+        d['timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.tasks[task_id]=d
+        self.save_tasks()    
 
     def list_tasks(self):
-        for task in self.tasks.values():
-            print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
+        if len(self.tasks)==0:
+            print('List is empty')
+        else:
+            for task in self.tasks.values():
+                print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
 
     def delete_task(self, task_id):
         if task_id in self.tasks:
