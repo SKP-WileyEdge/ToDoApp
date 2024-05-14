@@ -16,22 +16,21 @@ class TaskManager:
         self.filename = filename
         self.tasks = []
 
-    def add_task(self, title, priority):
+    def add_task(self, desc, priority):
         task = {}
         task_id = len(self.tasks)
         task['ID'] = task_id
-        task['Title'] = title
+        task['Description'] = title
         task['Priority'] = input("Enter Priority[high/medium/low]: ")
         task['Datetime'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.tasks.append(task)
 
-    def edit_task(self, task_id, title=None, priority=None):
-        if task_id in self.tasks:
+    def edit_task(self, task_id, desc, priority):
+        if task_id <= len(self.tasks):
             if title:
-                self.tasks[task_id]['title'] = title
+                self.tasks[task_id-1]['Description'] = desc
             if priority:
-                self.tasks[task_id]['priority'] = priority
-            self.save_tasks()
+                self.tasks[task_id-1]['Priority'] = priority
 
     def list_tasks(self):
         for task in self.tasks.values():
