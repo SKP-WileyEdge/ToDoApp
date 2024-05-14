@@ -57,8 +57,9 @@ class TaskManager:
     def delete_task(self, task_id):
         if task_id <= len(self.tasks):
             self.tasks[task_id-1] = 0
-            del self.tasks[task_id]
-            self.save_tasks()
+        else:
+            print("Sorry, no task with such id exists!")
+            
 
     def edit_task(self, task_id, title=None, priority=None):
         if task_id in self.tasks:
