@@ -87,9 +87,12 @@ def main():
             task_manager.list_tasks()
             print('\n')
             task_id = input("Enter task ID to edit: ")
-            title = input("Enter new title (leave blank to keep current): ")
-            priority = input("Enter new priority (leave blank to keep current): ")
-            task_manager.edit_task(task_id, title, priority)
+            if task_id in task_manager.tasks:
+                title = input("Enter new title (leave blank to keep current): ")
+                priority = input("Enter new priority (leave blank to keep current): ")
+                task_manager.edit_task(task_id, title, priority)
+            else:
+                print('Invalid ID')
             print('\n')
             print("Here is the Updated todo list: ")
             task_manager.list_tasks()
