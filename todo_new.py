@@ -15,6 +15,26 @@ class TaskManager:
         self.filename = filename
         self.tasks = self.load_tasks()
 
+    def add_task(self, desc, priority):
+        task = {}
+        task_id = len(self.tasks)
+        task['ID'] = task_id
+        task['Description'] = title
+        task['Priority'] = input("Enter Priority[high/medium/low]: ")
+        task['Datetime'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.tasks.append(task)
+
+    def edit_task(self, task_id, desc, priority):
+        if task_id <= len(self.tasks):
+            self.tasks[task_id-1]['Description'] = desc
+            self.tasks[task_id-1]['Priority'] = priority
+        else:
+            print("Sorry no task with such id !")
+
+    def list_tasks(self):
+        for t in self.tasks.keys():
+                print(f"ID is {t['ID']}, Task is {t['Description']}, and the Priority of this task is {t['Priority']}" )
+
     def load_tasks(self):
         if os.path.exists(self.filename):
             with open(self.filename, 'r') as file:
