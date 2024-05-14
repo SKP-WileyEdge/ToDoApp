@@ -32,7 +32,7 @@ class TaskManager:
 
     def list_tasks(self):
         for task in self.tasks.values():
-            print("ID is %d, Task is %s, and the Priority of this task is %s" %(task['id'],task['title'],task['priority']))
+            print("ID is %s, Task is %s, and the Priority of this task is %s" %(task['id'],task['title'],task['priority']))
    
     def delete_task(self, task_id):
         if task_id in self.tasks:
@@ -86,21 +86,25 @@ def main():
             task_manager.create_task(title, priority)
         elif choice == '2':
             task_manager.list_tasks()
-            print('/n')
+            print('\n')
             task_id = input("Enter task ID to edit: ")
             title = input("Enter new title (leave blank to keep current): ")
             priority = input("Enter new priority (leave blank to keep current): ")
             task_manager.edit_task(task_id, title, priority)
+            print('\n')
+            print("Here is the Updated todo list: ")
+            task_manager.list_tasks()
+            
         elif choice == '3':
             task_manager.list_tasks()
         elif choice == '4':
             task_manager.list_tasks()
-            print('/n')
+            print('\n')
             task_id = input("Enter task ID to delete: ")
             task_manager.delete_task(task_id)
         elif choice == '5':
             print("\n1. Search by ID\n2. Search by Task\n3. Search by Priority\n4. Search by Timestamp\n")
-            search_type = input("Choose search type: ")
+            search_type = input("Choose type: ")
             search_term = input("Enter search term: ")
             task_manager.search_tasks(search_term, search_type)
         elif choice == '6':
