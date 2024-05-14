@@ -12,24 +12,18 @@ class Task:
         return {"id": self.id, "title": self.title, "priority": self.priority}
 
 class TaskManager:
-    def __init__(self, filename='tasks.json'):
+    def __init__(self, filename='tasks.json', tasks):
         self.filename = filename
-        self.tasks = self.load_tasks()
+        self.tasks = []
 
-    def load_tasks(self):
-        if os.path.exists(self.filename):
-            with open(self.filename, 'r') as file:
-                return json.load(file)
-        return {}
-
-    def save_tasks(self):
-        with open(self.filename, 'w') as file:
-            json.dump(self.tasks, file, indent=4)
-
-    def create_task(self, title, priority):
-        task_id = str(len(self.tasks) + 1)
-        self.tasks[task_id] = Task(task_id, title, priority).to_dict()
-        self.save_tasks()
+    def add_task(self, title, priority):
+        task = {}
+        task_id = len(self.tasks)
+        task['ID'] = 1
+        task['Title'] = title
+        task['Priority'] = input("Enter Priority[high/medium/low]: ")
+        task['Datetime'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.tasks.append(task)
 
     def edit_task(self, task_id, title=None, priority=None):
         if task_id in self.tasks:
