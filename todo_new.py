@@ -13,7 +13,7 @@ class Task:
 class TaskManager:
     def __init__(self, filename='tasks.json'):
         self.filename = filename
-        self.tasks = self.load_tasks()
+        self.tasks = []
 
     def add_task(self, desc, priority):
         task = {}
