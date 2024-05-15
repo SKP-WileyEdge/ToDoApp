@@ -47,7 +47,11 @@ class TaskManager:
 
     def delete_task(self, task_id):
         if task_id in self.tasks:
+            deleted_task_title = self.tasks[task_id]['title']
             del self.tasks[task_id]
+            print(f"The ID {task_id} is successfully deleted. Title: '{deleted_task_title}'")
+        else:
+            print(f"Task with ID {task_id} not found.")
 
     def edit_task(self, task_id, title=None, priority=None):
         if task_id in self.tasks:
@@ -109,7 +113,6 @@ def main():
             print('\n')
             task_id = input("Enter task ID to delete: ")
             task_manager.delete_task(task_id)
-            print('The task with ID=%s is deleted.' %(task_id))
         elif choice == '5':
             print("\n1. Search by ID\n2. Search by Task\n3. Search by Priority\n4. Search by Timestamp\n")
             search_type = input("Choose type: ")

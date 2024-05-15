@@ -40,8 +40,12 @@ class TaskManager:
         d['title'] = title
         d['priority'] = priority
         d['timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.tasks[task_id]=d
-        self.save_tasks()    
+        if(title and priority):    
+            self.tasks[task_id]=d
+            self.save_tasks()
+            return 1
+        else:
+            return 0  
 
     def list_tasks(self):
         if len(self.tasks)==0:
@@ -52,8 +56,12 @@ class TaskManager:
 
     def delete_task(self, task_id):
         if task_id in self.tasks:
+            deleted_task_title = self.tasks[task_id]['title']
             del self.tasks[task_id]
-            self.save_tasks()
+            self.save_tasks()  
+            print(f"The ID {task_id} is successfully deleted. Title: '{deleted_task_title}'")
+        else:
+            print(f"Task with ID {task_id} not found.")
 
     def edit_task(self, task_id, title=None, priority=None):
         if task_id in self.tasks:
@@ -94,8 +102,13 @@ def main():
         if choice == '1':
             title = input("Enter task title: ")
             priority = input("Enter task priority (high, medium, low): ")
-            task_manager.create_task(title, priority)
-            print('New task is created !')
+            ctask=task_manager.create_task(title, priority)
+            if ctask==1:
+                print('New task is created !')
+            elif ctask==0:
+                print("Task was not created because you have not filled title or priority.\n Try it again!")
+            else:
+                print("Something went wrong")
         elif choice == '2':
             task_manager.list_tasks()
             print('\n')
@@ -116,7 +129,6 @@ def main():
             print('\n')
             task_id = input("Enter task ID to delete: ")
             task_manager.delete_task(task_id)
-            print('The task with ID=%s is deleted.' %(task_id))
         elif choice == '5':
             print("\n1. Search by ID\n2. Search by Task\n3. Search by Priority\n4. Search by Timestamp\n")
             search_type = input("Choose type: ")
