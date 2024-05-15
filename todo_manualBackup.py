@@ -13,6 +13,8 @@ class TaskManager:
                 return json.load(file)
         return {}
 
+    
+########################################## CREATE TASK ##############################################
     def create_task(self,title, priority):
         d = {}
         if(len(self.tasks)>0):
@@ -32,6 +34,8 @@ class TaskManager:
         else:
             return 0
 
+
+########################################### LIST TASK ##################################################
     def list_tasks(self):
         if len(self.tasks)==0:
             print('\nList is empty')
@@ -39,6 +43,9 @@ class TaskManager:
             for task in self.tasks.values():
                 print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
 
+
+    
+########################################### DELETE TASK ##################################################
     def delete_task(self, task_id):
         if task_id in self.tasks:
             deleted_task_title = self.tasks[task_id]['title']
@@ -47,6 +54,9 @@ class TaskManager:
         else:
             print(f"\nTask with ID {task_id} not found.")
 
+
+
+############################################### EDIT TASK ######################################################
     def edit_task(self, task_id, title=None, priority=None):
         if task_id in self.tasks:
             if title:
@@ -54,6 +64,9 @@ class TaskManager:
             if priority:
                 self.tasks[task_id]['priority'] = priority
 
+
+
+############################################### SEARCH TASK ######################################################
     def search_tasks(self, search_term, search_type):
         if search_type == '1':  # Search by ID
             for task_id, task in self.tasks.items():
@@ -83,7 +96,9 @@ class TaskManager:
                 else:
                     print(f"No Task with timestamp like: {search_term} is found")
 
-    
+
+
+###################################################### BACKUP TASK ####################################################
     def backup_tasks(self):
         with open(self.filename, 'w') as file:
             json.dump(self.tasks, file, indent=4)
