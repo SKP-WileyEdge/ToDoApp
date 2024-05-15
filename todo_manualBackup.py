@@ -41,7 +41,7 @@ class TaskManager:
             print('\nList is empty')
         else:
             for task in self.tasks.values():
-                print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
+                print(f"{task['id']}: {{\n\tID: {task['id']},\n\tTitle: {task['title']},\n\tPriority: {task['priority']},\n\tTimestamp: {task['timestamp']}\n}},")
 
 
     
