@@ -59,19 +59,31 @@ class TaskManager:
             for task_id, task in self.tasks.items():
                 if search_term.lower() == task_id.lower():
                     print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
+                else:
+                    print(f"No Task with id: {search_term} is found")
+                    
         elif search_type == '2':  # Search by Task
             for task in self.tasks.values():
                 if search_term.lower() in task['title'].lower():
                     print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
+                else:
+                    print(f"No Task with title like: {search_term} is found")
+                    
         elif search_type == '3':  # Search by Priority
             for task in self.tasks.values():
                 if search_term.lower() in task['priority'].lower():
                     print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
+                else:
+                    print(f"No Task with priority: {search_term} is found")
+                    
         else:  # Search by Timestamp
             for task in self.tasks.values():
                 if search_term.lower() in task['timestamp'].lower():
                     print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
+                else:
+                    print(f"No Task with timestamp like: {search_term} is found")
 
+    
     def backup_tasks(self):
         with open(self.filename, 'w') as file:
             json.dump(self.tasks, file, indent=4)
@@ -132,11 +144,13 @@ def main():
                     search_term = input("Enter search term: ")
                     flag = 0
                     for i in task_manager.tasks:
-                        if search_term not in task_manager.tasks[i].values():
-                            continue
-                        else:
-                            task_manager.search_tasks(search_term, search_type)
-                            flag = 1
+                        for v in task_manager.tasks[i].values()
+                            if search_term not in v:
+                                continue
+                            else:
+                                task_manager.search_tasks(search_term, search_type)
+                                flag = 1
+                                break
                     if flag==0:
                         print('\nInvalid search term ')
         
