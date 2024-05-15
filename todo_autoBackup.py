@@ -99,6 +99,8 @@ def main():
                 print("\nTask was not created because you have not filled title or priority.\n Try it again!")
             else:
                 print("\nSomething went wrong")
+        
+        
         elif choice == '2':
             task_manager.list_tasks()
             print('\n')
@@ -112,13 +114,19 @@ def main():
             print(f"\nThe ID {task_id} is successfully edited.")
             print("\nHere is the Updated todo list: ")
             task_manager.list_tasks()
+       
+        
         elif choice == '3':
             task_manager.list_tasks()
+        
+        
         elif choice == '4':
             task_manager.list_tasks()
             print('\n')
             task_id = input("Enter task ID to delete: ")
             task_manager.delete_task(task_id)
+        
+        
         elif choice == '5':
             if (len(task_manager.tasks)==0):
                 print('\nList is empty')
@@ -134,10 +142,14 @@ def main():
                         print('\nInvalid search term ')
                     else:
                         task_manager.search_tasks(search_term, search_type)
+        
+        
         elif choice == '6':
             backup_filename = input("Enter backup filename: ")
             task_manager.backup_tasks(backup_filename)
             print('\nBackup is created')
+        
+        
         elif choice == '7':
             break
         else:
