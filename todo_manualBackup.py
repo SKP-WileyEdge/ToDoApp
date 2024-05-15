@@ -36,11 +36,15 @@ class TaskManager:
         d['title'] = title
         d['priority'] = priority
         d['timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.tasks[task_id]=d  
+        if(title and priority):    
+            self.tasks[task_id]=d
+            return 1
+        else:
+            return 0
 
     def list_tasks(self):
         if len(self.tasks)==0:
-            print('List is empty')
+            print('\nList is empty')
         else:
             for task in self.tasks.values():
                 print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
@@ -49,9 +53,9 @@ class TaskManager:
         if task_id in self.tasks:
             deleted_task_title = self.tasks[task_id]['title']
             del self.tasks[task_id]
-            print(f"The ID {task_id} is successfully deleted. Title: '{deleted_task_title}'")
+            print(f"\nThe ID {task_id} is successfully deleted. Title: '{deleted_task_title}'")
         else:
-            print(f"Task with ID {task_id} not found.")
+            print(f"\nTask with ID {task_id} not found.")
 
     def edit_task(self, task_id, title=None, priority=None):
         if task_id in self.tasks:
@@ -87,12 +91,16 @@ def main():
     while True:
         print("\n1. Create Task\n2. Edit Task\n3. List Tasks\n4. Delete Task\n5. Search Tasks\n6. Backup Tasks\n7. Exit")
         choice = input("Choose an option: ")
-
         if choice == '1':
             title = input("Enter task title: ")
             priority = input("Enter task priority (high, medium, low): ")
-            task_manager.create_task(title, priority)
-            print('New task is created !')
+            ctask=task_manager.create_task(title, priority)
+            if ctask==1:
+                print('\nNew task is created !')
+            elif ctask==0:
+                print("\nTask was not created because you have not filled title or priority.\nTry it again!")
+            else:
+                print("\nSomething went wrong")
         elif choice == '2':
             task_manager.list_tasks()
             print('\n')
@@ -102,7 +110,7 @@ def main():
                 priority = input("Enter new priority (leave blank to keep current): ")
                 task_manager.edit_task(task_id, title, priority)
             else:
-                print('Invalid ID')
+                print('\nInvalid ID')
             print('\n')
             print("Here is the Updated todo list: ")
             task_manager.list_tasks()
@@ -114,24 +122,27 @@ def main():
             task_id = input("Enter task ID to delete: ")
             task_manager.delete_task(task_id)
         elif choice == '5':
-            print("\n1. Search by ID\n2. Search by Task\n3. Search by Priority\n4. Search by Timestamp\n")
-            search_type = input("Choose type: ")
-            valid_search_types = ['1', '2', '3', '4'] 
-            if search_type not in valid_search_types:
-                print('Invalid search type')
-            else:
-                search_term = input("Enter search term: ")
-                if search_term not in task_manager.tasks:
-                    print('Invalid search term ')
+            if (len(task_manager.tasks)==0):
+                print('\nList is empty')
+            else:    
+                print("\n1. Search by ID\n2. Search by Task\n3. Search by Priority\n4. Search by Timestamp\n")
+                search_type = input("Choose type: ")
+                valid_search_types = ['1', '2', '3', '4'] 
+                if search_type not in valid_search_types:
+                    print('\nInvalid search type')
                 else:
-                    task_manager.search_tasks(search_term, search_type)
+                    search_term = input("Enter search term: ")
+                    if search_term not in task_manager.tasks:
+                        print('\nInvalid search term ')
+                    else:
+                        task_manager.search_tasks(search_term, search_type)
         elif choice == '6':
             task_manager.backup_tasks()
-            print('Backup is created')
+            print('\nBackup is created')
         elif choice == '7':
             break
         else:
-            print("Invalid choice. Please try again.")
+            print("\nInvalid choice. Please try again.")
 
 if __name__ == "__main__":
     main()

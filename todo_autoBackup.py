@@ -49,7 +49,7 @@ class TaskManager:
 
     def list_tasks(self):
         if len(self.tasks)==0:
-            print('List is empty')
+            print('\nList is empty')
         else:
             for task in self.tasks.values():
                 print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
@@ -106,9 +106,9 @@ def main():
             if ctask==1:
                 print('New task is created !')
             elif ctask==0:
-                print("Task was not created because you have not filled title or priority.\n Try it again!")
+                print("\nTask was not created because you have not filled title or priority.\n Try it again!")
             else:
-                print("Something went wrong")
+                print("\nSomething went wrong")
         elif choice == '2':
             task_manager.list_tasks()
             print('\n')
@@ -118,9 +118,9 @@ def main():
                 priority = input("Enter new priority (leave blank to keep current): ")
                 task_manager.edit_task(task_id, title, priority)
             else:
-                print('Invalid ID')
+                print('\nInvalid ID')
             print('\n')
-            print("Here is the Updated todo list: ")
+            print("\nHere is the Updated todo list: ")
             task_manager.list_tasks()
         elif choice == '3':
             task_manager.list_tasks()
@@ -130,25 +130,28 @@ def main():
             task_id = input("Enter task ID to delete: ")
             task_manager.delete_task(task_id)
         elif choice == '5':
-            print("\n1. Search by ID\n2. Search by Task\n3. Search by Priority\n4. Search by Timestamp\n")
-            search_type = input("Choose type: ")
-            valid_search_types = ['1', '2', '3', '4'] 
-            if search_type not in valid_search_types:
-                print('Invalid search type')
-            else:
-                search_term = input("Enter search term: ")
-                if search_term not in task_manager.tasks:
-                    print('Invalid search term ')
+            if (len(task_manager.tasks)==0):
+                print('\nList is empty')
+            else: 
+                print("\n1. Search by ID\n2. Search by Task\n3. Search by Priority\n4. Search by Timestamp\n")
+                search_type = input("Choose type: ")
+                valid_search_types = ['1', '2', '3', '4'] 
+                if search_type not in valid_search_types:
+                    print('\nInvalid search type')
                 else:
-                    task_manager.search_tasks(search_term, search_type)
+                    search_term = input("Enter search term: ")
+                    if search_term not in task_manager.tasks:
+                        print('\nInvalid search term ')
+                    else:
+                        task_manager.search_tasks(search_term, search_type)
         elif choice == '6':
             backup_filename = input("Enter backup filename: ")
             task_manager.backup_tasks(backup_filename)
-            print('Backup is created')
+            print('\nBackup is created')
         elif choice == '7':
             break
         else:
-            print("Invalid choice. Please try again.")
+            print("\nInvalid choice. Please try again.")
 
 if __name__ == "__main__":
     main()
