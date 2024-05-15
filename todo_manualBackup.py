@@ -67,7 +67,7 @@ class TaskManager:
     def search_tasks(self, search_term, search_type):
         if search_type == '1':  # Search by ID
             for task_id, task in self.tasks.items():
-                if search_term.lower() in task_id.lower():
+                if search_term.lower() == task_id.lower():
                     print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
         elif search_type == '2':  # Search by Task
             for task in self.tasks.values():
