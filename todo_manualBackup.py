@@ -130,10 +130,15 @@ def main():
                     print('\nInvalid search type')
                 else:
                     search_term = input("Enter search term: ")
-                    if search_term not in task_manager.tasks:
+                    flag = 0
+                    for i in task_manager.tasks:
+                        if search_term not in task_manager.tasks[i].values():
+                            continue
+                        else:
+                            task_manager.search_tasks(search_term, search_type)
+                            flag = 1
+                    if flag==0:
                         print('\nInvalid search term ')
-                    else:
-                        task_manager.search_tasks(search_term, search_type)
         
         
         elif choice == '6':
