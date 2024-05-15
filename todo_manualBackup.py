@@ -1,3 +1,10 @@
+# 1. Duplicate Task Allowed
+# 2. While printing details aren't formatted --- SOLVED
+# 3. Spaces aren't taken care
+# 4. Validation not Done Properly
+# 5.Task Status Update Field/Feature Missing. (Major)
+# 6. Broken CODE --- SOLVED
+
 import json
 import os
 from datetime import datetime
