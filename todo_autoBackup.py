@@ -2,16 +2,6 @@ import json
 import os
 from datetime import datetime
 
-class Task:
-    def __init__(self, id, title, priority, timestamp):
-        self.id = id
-        self.title = title
-        self.priority = priority
-        self.timestamp = timestamp
-
-    def to_dict(self):
-        return {"id": self.id, "title": self.title, "priority": self.priority, "timestamp": self.timestamp}
-
 class TaskManager:
     def __init__(self, filename='Database.json'):
         self.filename = filename
@@ -74,7 +64,7 @@ class TaskManager:
     def search_tasks(self, search_term, search_type):
         if search_type == '1':  # Search by ID
             for task_id, task in self.tasks.items():
-                if search_term.lower() in task_id.lower():
+                if search_term.lower() == task_id.lower():
                     print(f"ID: {task['id']}, Title: {task['title']}, Priority: {task['priority']}, Timestamp: {task['timestamp']}")
         elif search_type == '2':  # Search by Task
             for task in self.tasks.values():
@@ -119,7 +109,7 @@ def main():
                 task_manager.edit_task(task_id, title, priority)
             else:
                 print('\nInvalid ID')
-            print('\n')
+            print(f"\nThe ID {task_id} is successfully edited.")
             print("\nHere is the Updated todo list: ")
             task_manager.list_tasks()
         elif choice == '3':

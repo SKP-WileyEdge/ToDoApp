@@ -2,16 +2,6 @@ import json
 import os
 from datetime import datetime
 
-class Task:
-    def __init__(self, id, title, priority, timestamp):
-        self.id = id
-        self.title = title
-        self.priority = priority
-        self.timestamp = timestamp
-
-    def to_dict(self):
-        return {"id": self.id, "title": self.title, "priority": self.priority, "timestamp": self.timestamp}
-
 class TaskManager:
     def __init__(self, filename='tasks_backup.json'):
         self.filename = filename
@@ -111,8 +101,8 @@ def main():
                 task_manager.edit_task(task_id, title, priority)
             else:
                 print('\nInvalid ID')
-            print('\n')
-            print("Here is the Updated todo list: ")
+            print(f"\nThe ID {task_id} is successfully edited.")
+            print("\nHere is the Updated todo list: ")
             task_manager.list_tasks()
         elif choice == '3':
             task_manager.list_tasks()
